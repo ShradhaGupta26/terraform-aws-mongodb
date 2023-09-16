@@ -58,11 +58,6 @@ variable "replica_set_name" {
   default = "mongoRs"
 }
 
-#variable "mongo_username" {
- # type    = string
- # default = "admin"
-#}
-
 variable "num_secondary_nodes" {
   type    = string
   default = 2
