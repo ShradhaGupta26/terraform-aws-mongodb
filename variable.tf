@@ -4,7 +4,7 @@ variable "region" {
 
 variable "mongo_ami" {
   type    = string
-  default = "ami-02f77f06931ec2659"
+  default = " "
 }
 
 variable "secondary_node_type" {
@@ -58,10 +58,10 @@ variable "replica_set_name" {
   default = "mongoRs"
 }
 
-variable "mongo_username" {
-  type    = string
-  default = "admin"
-}
+#variable "mongo_username" {
+ # type    = string
+ # default = "admin"
+#}
 
 variable "num_secondary_nodes" {
   type    = string
