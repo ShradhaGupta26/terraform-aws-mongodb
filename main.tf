@@ -125,8 +125,7 @@ data "template_file" "userdata" {
 #############################
 # Mongo Slave Instances
 #############################
-
-data "aws_ami" "amazon_linux_2_arm" {
+data "aws_ami" "amazon-linux-2" {
   most_recent = true
 
   filter {
@@ -136,15 +135,21 @@ data "aws_ami" "amazon_linux_2_arm" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-arm64-gp2"]
+    values = ["amzn2-ami-ecs-hvm*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["arm64"]
   }
 
   owners = ["amazon"]
 }
 
+
 resource "aws_instance" "mongo_secondary" {
   count                       = var.num_secondary_nodes
-  ami                         = var.ami_id == "" ? data.aws_ami.amazon_linux_2_arm.id : var.ami_id
+  ami                         = data.aws_ami.amazon-linux-2.id 
   instance_type               = var.secondary_node_type
   key_name                    = var.key_name
   subnet_id                   = var.mongo_subnet_id
@@ -203,7 +208,7 @@ resource "aws_instance" "mongo_secondary" {
 # Mongo Primary Instances
 #############################
 resource "aws_instance" "mongo_primary" {
-  ami                         = "ami-0abb0f6c7cff47436"
+  ami                         = data.aws_ami.amazon-linux-2.id 
   instance_type               = var.primary_node_type
   key_name                    = var.key_name
   subnet_id                   = var.mongo_subnet_id
